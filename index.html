@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" type="image/png"
+        href="https://jstatic.pages.dev/files/products/ide/images/impossible_ide_icon.png" sizes="30x30">
+    <link rel="icon" type="image/png"
+        href="https://jstatic.pages.dev/files/products/ide/images/impossible_ide_icon.png" sizes="600x600">
+
+    <title>CodeStorm</title>
+
+    <script src="https://jstatic.pages.dev/files/products/ide/docs/loader.js"></script>
+
+    <style>
+        @font-face {
+            font-family: TwemojiRubisco;
+            src: url(https://jstatic.pages.dev/files/products/ide/fonts/TwemojiRubisco.ttf);
+        }
+
+        @font-face {
+            font-family: SierraCode;
+            src: url(https://jstatic.pages.dev/files/products/ide/fonts/SierraCode-Light.ttf);
+        }
+
+        @font-face {
+            font-family: JupiterSans;
+            src: url(https://jstatic.pages.dev/files/products/ide/fonts/JupiterSans.ttf);
+        }
+
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            font-family: 'JupiterSans', 'TwemojiRubisco', Arial, Helvetica, sans-serif;
+        }
+
+        #logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100px;
+            height: 100px;
+            z-index: 1;
+        }
+
+        #editor-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            font-family: 'JupiterSans', 'TwemojiRubisco', Arial, Helvetica, sans-serif;
+            width: 100vw;
+        }
+
+        #editor {
+            flex: 1;
+            font-family: 'JupiterSans', 'TwemojiRubisco', Arial, Helvetica, sans-serif;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: flex-end;
+            padding: 8px;
+            background-color: #2b2d30;
+        }
+
+        button {
+            font-family: 'JupiterSans', 'TwemojiRubisco', Arial, Helvetica, sans-serif;
+            margin-right: 8px;
+            padding: 6px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #43454b;
+            color: #dfe1e5;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #3474f0;
+            color: #dfe1e5;
+        }
+
+        select {
+            font-family: 'JupiterSans', 'TwemojiRubisco', Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            background-color: #43454b;
+            color: #dfe1e5;
+            border: none;
+            margin-right: 8px;
+            padding: 6px 12px;
+            border-radius: 4px;
+        }
+
+        .monaco-editor .suggest-widget .monaco-list .monaco-list-row .monaco-highlighted-label {
+            color: #dfe1e5 !important;
+        }
+
+        #logo {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: auto;
+            height: 30px;
+            z-index: 1;
+            margin-left: 10px;
+            padding-top: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <img id="logo"
+        src="https://jstatic.pages.dev/files/products/ide/images/codestorm_logo.png"
+        alt="Logo">
+    <div class="button-container">
+        <button id="openButton">📂 Open</button>
+        <button id="saveButton">💾 Save</button>
+        <select id="languageSelector">
+            <option value="plaintext">Text</option>
+            <option value="sw">ScriptWriter</option>
+            <option value="c">C</option>
+            <option value="cpp">C++</option>
+            <option value="csharp">C#</option>
+            <option value="css">CSS</option>
+            <option value="go">Go</option>
+            <option value="html">HTML</option>
+            <option value="java">Java</option>
+            <option value="javascript">JavaScript</option>
+            <option value="kotlin">Kotlin</option>
+            <option value="php">PHP</option>
+            <option value="python">Python</option>
+            <option value="ruby">Ruby</option>
+            <option value="rust">Rust</option>
+            <option value="sql">SQL</option>
+            <option value="typescript">TypeScript</option>
+            <option value="vb">Visual Basic</option>
+
+
+
+        </select>
+        <select id="lineWrapSelector">
+            <option value="on">Line Wrap: On</option>
+            <option value="off">Line Wrap: Off</option>
+        </select>
+    </div>
+
+    <div id="editor-container"></div>
+
+    <script>
+        require.config({
+            paths: {
+                'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs'
+            }
+        });
+
+        require(['vs/editor/editor.main'], function () {
+            monaco.editor.defineTheme('paradigm', {
+                base: 'vs-dark',
+                inherit: true,
+                rules: [
+                    { token: 'identifier', foreground: '9bbbdc'},
+                    { token: 'operators', foreground: 'c4c2ca' },
+                    { token: 'keyword', foreground: '5db0d7' },
+
+                    { token: 'string', foreground: 'f29766' },
+                    { token: 'string.escape', foreground: '9e9eff' },
+
+                    { token: 'comment', foreground: 'c4c2ca', },
+                    { token: 'comment.doc', foreground: 'c4c2ca' },
+
+                    { token: 'constant', foreground: 'c4c2ca' },
+
+                    { token: 'delimiter.curly', foreground: 'c4c2ca' },
+                    { token: 'delimiter.square', foreground: 'c4c2ca' },
+                    { token: 'delimiter.parenthesis', foreground: 'c4c2ca' },
+                    { token: 'delimiter.angle', foreground: 'c4c2ca' },
+                    { token: 'delimiter.array', foreground: 'c4c2ca' },
+                    { token: 'delimiter.bracket', foreground: 'c4c2ca' },
+
+                    { token: 'number.hex', foreground: 'f29766' },
+                    { token: 'number.octal', foreground: 'f29766' },
+                    { token: 'number.binary', foreground: 'f29766' },
+                    { token: 'number.float', foreground: 'f29766' },
+
+                    { token: 'variable.name', foreground: '5db0d7' },
+                    { token: 'variable.value', foreground: 'f29766' },
+
+                    { token: 'entity', foreground: 'c4c2ca' },
+                    { token: 'tag', foreground: '5db0d7' },
+
+                    { token: 'info-token', foreground: 'ff9e9e' },
+                    { token: 'warn-token', foreground: 'ff9e9e' },
+                    { token: 'error-token', foreground: 'ff9e9e' },
+                    { token: 'debug-token', foreground: 'ff9e9e' },
+
+                    { token: 'regexp', foreground: 'c4c2ca' },
+                    { token: 'attribute', foreground: 'c4c2ca' },
+                    { token: 'constructor', foreground: 'c4c2ca' },
+                    { token: 'namespace', foreground: '5db0d7' },
+                    { token: 'type', foreground: 'f29766' },
+                    { token: 'predefined', foreground: 'c4c2ca' },
+                    { token: 'invalid', foreground: 'c4c2ca' },
+                ],
+                colors: {
+                    'editor.foreground': '#dedde4',
+                    'editor.background': '#1e1f25',
+                    'editorCursor.foreground': '#dedde4',
+                    'editor.lineHighlightBackground': '#26272e',
+                    'editorLineNumber.foreground': '#4e4f55',
+                    'editor.selectionBackground': '#3f2f34',
+                    'minimap.background': '#1e1f25',
+                    'minimap.foreground': '#1e1f25'
+                }
+            });
+
+            var initialLanguage = document.getElementById('languageSelector').value;
+            var initialLineWrap = document.getElementById('lineWrapSelector').value === 'on';
+
+            var editor = monaco.editor.create(document.getElementById('editor-container'), {
+                value: '',
+                language: initialLanguage,
+                theme: 'paradigm',
+                automaticLayout: true,
+                fontSize: 16,
+                fontFamily: 'JupiterSans, TwemojiRubisco, Arial, Helvetica, sans-serif',
+                scrollBeyondLastLine: false,
+                minimap: { enabled: true },
+                lineNumbers: "on",
+                wordWrap: initialLineWrap ? "on" : "off"
+            });
+
+            var languageSelector = document.getElementById('languageSelector');
+            var lineWrapSelector = document.getElementById('lineWrapSelector');
+
+            languageSelector.addEventListener('change', function () {
+                var selectedLanguage = languageSelector.value;
+                monaco.editor.setModelLanguage(editor.getModel(), selectedLanguage);
+            });
+
+            lineWrapSelector.addEventListener('change', function () {
+                var lineWrapValue = lineWrapSelector.value;
+                editor.updateOptions({ wordWrap: lineWrapValue });
+            });
+
+            function openFile() {
+                var input = document.createElement('input');
+                input.type = 'file';
+                input.accept = 'text/plain, text/html, text/css, text/javascript, .py, .ts, .java, .kt, .php, .go, .c, .csharp, .cpp, .rs, .rb, .sql, .pscpt';
+                input.onchange = function (event) {
+                    var file = event.target.files[0];
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        editor.setValue(reader.result);
+                        document.title = file.name;
+                    };
+                    reader.readAsText(file);
+                };
+                input.click();
+            }
+
+            function saveFile() {
+                var content = editor.getValue();
+                var selectedLanguage = languageSelector.value;
+                var extension = selectedLanguage === 'plaintext' ? 'txt' : selectedLanguage;
+                extension = selectedLanguage === 'javascript' ? 'js' : extension;
+                extension = selectedLanguage === 'python' ? 'py' : extension;
+                extension = selectedLanguage === 'typescript' ? 'ts' : extension;
+                extension = selectedLanguage === 'java' ? 'java' : extension;
+                extension = selectedLanguage === 'kotlin' ? 'kt' : extension;
+                extension = selectedLanguage === 'rust' ? 'rs' : extension;
+                extension = selectedLanguage === 'ruby' ? 'rb' : extension;
+                var blob = new Blob([content], { type: 'text/plain' });
+                var url = URL.createObjectURL(blob);
+                var a = document.createElement('a');
+                a.href = url;
+                var currentDate = new Date().toISOString().slice(0, 19).replace(/[-T:/]/g, '');
+                var fileName = selectedLanguage + '_' + currentDate + '.' + extension;
+                a.download = fileName;
+                document.title = fileName;
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+                document.body.removeChild(a);
+                isModified = false;
+            }
+
+            document.getElementById('openButton').addEventListener('click', openFile);
+            document.getElementById('saveButton').addEventListener('click', saveFile);
+
+            var isModified = false;
+
+            editor.onDidChangeModelContent(function () {
+                isModified = true;
+                var fileName = document.title;
+                if (!fileName.endsWith('*')) {
+                    fileName += '*';
+                }
+                document.title = fileName;
+            });
+
+            window.addEventListener('beforeunload', function (e) {
+                if (isModified) {
+                    var confirmationMessage = 'You may have some unsaved changes. Are you sure you want to leave?';
+                    e.returnValue = confirmationMessage;
+                    return confirmationMessage;
+                }
+            });
+
+            window.addEventListener('keydown', function (event) {
+                if (event.ctrlKey && event.key === 's') {
+                    event.preventDefault();
+                    saveFile();
+                } else if (event.ctrlKey && event.key === 'o') {
+                    event.preventDefault();
+                    openFile();
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
