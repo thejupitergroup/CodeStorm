@@ -126,8 +126,8 @@
         <button id="openButton">📂 Open</button>
         <button id="saveButton">💾 Save</button>
         <select id="languageSelector">
-            <option value="plaintext">Text</option>
-            <option value="sw">ScriptWriter</option>
+            <option value="plaintext">Plain Text</option>
+            <option value="cstxt">CodeStorm Plain Text</option>
             <option value="c">C</option>
             <option value="cpp">C++</option>
             <option value="csharp">C#</option>
@@ -255,7 +255,7 @@
             function openFile() {
                 var input = document.createElement('input');
                 input.type = 'file';
-                input.accept = 'text/plain, text/html, text/css, text/javascript, .py, .ts, .java, .kt, .php, .go, .c, .csharp, .cpp, .rs, .rb, .sql, .pscpt';
+                input.accept = 'text/plain, text/html, text/css, text/javascript, .py, .ts, .java, .kt, .php, .go, .c, .csharp, .cpp, .rs, .rb, .sql, .pscpt, .cstxt';
                 input.onchange = function (event) {
                     var file = event.target.files[0];
                     var reader = new FileReader();
