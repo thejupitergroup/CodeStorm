@@ -1,46 +1,36 @@
-
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" type="image/png"
-        href="https://jstatic.pages.dev/files/products/ide/images/impossible_ide_icon.png" sizes="30x30">
-    <link rel="icon" type="image/png"
-        href="https://jstatic.pages.dev/files/products/ide/images/impossible_ide_icon.png" sizes="600x600">
+    <link rel="icon" type="image/png" href="https://jstatic.pages.dev/files/products/ide/images/impossible_ide_icon.png" sizes="30x30">
+    <link rel="icon" type="image/png" href="https://jstatic.pages.dev/files/products/ide/images/impossible_ide_icon.png" sizes="600x600">
 
     <title>CodeStorm</title>
 
-    <script src="https://jstatic.pages.dev/files/products/ide/docs/loader.js"></script>
-
+    <script src="https://delivercdn.pages.dev/monaco-editor/loader.js"></script>
+    
     <style>
         @font-face {
-            font-family: TwemojiRubisco;
+            font-family: 'WebCerveaux Text';
+            src: url(https://delivercdn.pages.dev/fonts/Underpass.ttf);
+        }
+
+        @font-face {
+            font-family: 'Twemoji Rubisco';
             src: url(https://jstatic.pages.dev/files/products/ide/fonts/TwemojiRubisco.ttf);
         }
 
-        @font-face {
-            font-family: SierraCode;
-            src: url(https://jstatic.pages.dev/files/products/ide/fonts/SierraCode-Light.ttf);
-        }
-
-        @font-face {
-            font-family: JupiterSans;
-            src: url(https://jstatic.pages.dev/files/fonts/venussans.ttf);
-        }
-
-        html,
-        body {
+        html, body {
             margin: 0;
             padding: 0;
             height: 100%;
             overflow: hidden;
             display: flex;
             flex-direction: column;
-            font-family: 'JupiterSans', 'TwemojiRubisco', Arial, Helvetica, sans-serif;
+            font-family: 'WebCerveaux Text', 'Twemoji Rubisco', Arial, Helvetica, sans-serif;
         }
 
         #logo {
@@ -57,24 +47,24 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            font-family: 'JupiterSans', 'TwemojiRubisco', Arial, Helvetica, sans-serif;
+            font-family: 'WebCerveaux Text', 'Twemoji Rubisco', Arial, Helvetica, sans-serif;
             width: 100vw;
         }
 
         #editor {
             flex: 1;
-            font-family: 'JupiterSans', 'TwemojiRubisco', Arial, Helvetica, sans-serif;
+            font-family: 'WebCerveaux Text', 'Twemoji Rubisco', Arial, Helvetica, sans-serif;
         }
 
         .button-container {
             display: flex;
             justify-content: flex-end;
             padding: 8px;
-            background-color: #2b2d30;
+            background-color: #292929;
         }
 
         button {
-            font-family: 'JupiterSans', 'TwemojiRubisco', Arial, Helvetica, sans-serif;
+            font-family: 'WebCerveaux Text', 'Twemoji Rubisco', Arial, Helvetica, sans-serif;
             margin-right: 8px;
             padding: 6px 12px;
             font-size: 14px;
@@ -91,7 +81,7 @@
         }
 
         select {
-            font-family: 'JupiterSans', 'TwemojiRubisco', Arial, Helvetica, sans-serif;
+            font-family: 'WebCerveaux Text', 'Twemoji Rubisco', Arial, Helvetica, sans-serif;
             font-size: 14px;
             background-color: #43454b;
             color: #dfe1e5;
@@ -102,9 +92,10 @@
         }
 
         .monaco-editor .suggest-widget .monaco-list .monaco-list-row .monaco-highlighted-label {
-            color: #dfe1e5 !important;
+            color: #ffffff !important;
+            font-family: 'WebCerveaux Text';
         }
-
+        
         #logo {
             position: absolute;
             top: 0;
@@ -119,15 +110,14 @@
 </head>
 
 <body>
-    <img id="logo"
-        src="https://jstatic.pages.dev/files/products/ide/images/codestorm_logo.png"
-        alt="Logo">
+    <img id="logo" src="https://jstatic.pages.dev/files/products/ide/images/codestorm_logo.png" alt="Logo">
+
     <div class="button-container">
         <button id="openButton">📂 Open</button>
         <button id="saveButton">💾 Save</button>
         <select id="languageSelector">
             <option value="plaintext">Text</option>
-            <option value="sw">ScriptWriter</option>
+            <option value="dotlin">Dotlin</option>
             <option value="c">C</option>
             <option value="cpp">C++</option>
             <option value="csharp">C#</option>
@@ -144,9 +134,6 @@
             <option value="sql">SQL</option>
             <option value="typescript">TypeScript</option>
             <option value="vb">Visual Basic</option>
-
-
-
         </select>
         <select id="lineWrapSelector">
             <option value="on">Line Wrap: On</option>
@@ -162,64 +149,67 @@
                 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.27.0/min/vs'
             }
         });
-
+        
         require(['vs/editor/editor.main'], function () {
-            monaco.editor.defineTheme('paradigm', {
+            monaco.editor.defineTheme('WebScript', {
                 base: 'vs-dark',
                 inherit: true,
                 rules: [
-                    { token: 'identifier', foreground: '9bbbdc'},
-                    { token: 'operators', foreground: 'c4c2ca' },
-                    { token: 'keyword', foreground: '5db0d7' },
+                    { token: 'identifier', foreground: 'ebc88d'},
+                    { token: 'operators', foreground: 'd1d1d1' },
+                    { token: 'keyword', foreground: '82d2ce' },
 
-                    { token: 'string', foreground: 'f29766' },
+                    { token: 'string', foreground: 'e394dc' },
                     { token: 'string.escape', foreground: '9e9eff' },
 
-                    { token: 'comment', foreground: 'c4c2ca', },
-                    { token: 'comment.doc', foreground: 'c4c2ca' },
+                    { token: 'comment', foreground: '898989' },
+                    { token: 'comment.doc', foreground: '898989' },
 
-                    { token: 'constant', foreground: 'c4c2ca' },
+                    { token: 'constant', foreground: 'd1d1d1' },
 
-                    { token: 'delimiter.curly', foreground: 'c4c2ca' },
-                    { token: 'delimiter.square', foreground: 'c4c2ca' },
-                    { token: 'delimiter.parenthesis', foreground: 'c4c2ca' },
-                    { token: 'delimiter.angle', foreground: 'c4c2ca' },
-                    { token: 'delimiter.array', foreground: 'c4c2ca' },
-                    { token: 'delimiter.bracket', foreground: 'c4c2ca' },
+                    { token: 'delimiter.curly', foreground: 'd1d1d1' },
+                    { token: 'delimiter.square', foreground: 'd1d1d1' },
+                    { token: 'delimiter.parenthesis', foreground: 'd1d1d1' },
+                    { token: 'delimiter.angle', foreground: 'd1d1d1' },
+                    { token: 'delimiter.array', foreground: 'd1d1d1' },
+                    { token: 'delimiter.bracket', foreground: 'd1d1d1' },
 
-                    { token: 'number.hex', foreground: 'f29766' },
-                    { token: 'number.octal', foreground: 'f29766' },
-                    { token: 'number.binary', foreground: 'f29766' },
-                    { token: 'number.float', foreground: 'f29766' },
+                    { token: 'number.hex', foreground: 'ebc88d' },
+                    { token: 'number.octal', foreground: 'ebc88d' },
+                    { token: 'number.binary', foreground: 'ebc88d' },
+                    { token: 'number.float', foreground: 'ebc88d' },
+                    { token: 'number', foreground: 'ebc88d' },
 
-                    { token: 'variable.name', foreground: '5db0d7' },
+                    { token: 'variable.name', foreground: 'af9cff' },
                     { token: 'variable.value', foreground: 'f29766' },
 
-                    { token: 'entity', foreground: 'c4c2ca' },
-                    { token: 'tag', foreground: '5db0d7' },
+                    { token: 'entity', foreground: 'd1d1d1' },
+                    { token: 'tag', foreground: 'af9cff' },
 
-                    { token: 'info-token', foreground: 'ff9e9e' },
-                    { token: 'warn-token', foreground: 'ff9e9e' },
-                    { token: 'error-token', foreground: 'ff9e9e' },
-                    { token: 'debug-token', foreground: 'ff9e9e' },
+                    { token: 'info-token', foreground: '1a85f6' },
+                    { token: 'warn-token', foreground: 'facb66' },
+                    { token: 'error-token', foreground: 'ff5269' },
+                    { token: 'debug-token', foreground: '62c655' },
+                    
+                    { token: 'regexp', foreground: 'd1d1d1' },
+                    { token: 'attribute', foreground: 'd1d1d1' },
+                    { token: 'constructor', foreground: 'd1d1d1' },
+                    { token: 'namespace', foreground: '87c3ff' },
 
-                    { token: 'regexp', foreground: 'c4c2ca' },
-                    { token: 'attribute', foreground: 'c4c2ca' },
-                    { token: 'constructor', foreground: 'c4c2ca' },
-                    { token: 'namespace', foreground: '5db0d7' },
-                    { token: 'type', foreground: 'f29766' },
-                    { token: 'predefined', foreground: 'c4c2ca' },
-                    { token: 'invalid', foreground: 'c4c2ca' },
+                    { token: 'type', foreground: 'd1d1d1' },
+                    { token: 'predefined', foreground: 'd1d1d1' },
+                    { token: 'invalid', foreground: 'ff5269' },
                 ],
                 colors: {
-                    'editor.foreground': '#dedde4',
-                    'editor.background': '#1e1f25',
-                    'editorCursor.foreground': '#dedde4',
-                    'editor.lineHighlightBackground': '#26272e',
-                    'editorLineNumber.foreground': '#4e4f55',
-                    'editor.selectionBackground': '#3f2f34',
-                    'minimap.background': '#1e1f25',
-                    'minimap.foreground': '#1e1f25'
+                    'editor.foreground': '#181818',
+                    'editor.background': '#181818',
+                    'editorCursor.foreground': '#d1d1d1',
+                    'editor.lineHighlightBackground': '#1d2846',
+                    'editorLineNumber.foreground': '#c2c2c2',
+                    'editor.selectionBackground': '#2a524f',
+                    'minimap.background': '#181818',
+                    'minimap.foreground': '#181818',
+                    'minimap.text': '#ffffff'
                 }
             });
 
@@ -229,10 +219,10 @@
             var editor = monaco.editor.create(document.getElementById('editor-container'), {
                 value: '',
                 language: initialLanguage,
-                theme: 'paradigm',
+                theme: 'WebScript',
                 automaticLayout: true,
                 fontSize: 16,
-                fontFamily: 'JupiterSans, TwemojiRubisco, Arial, Helvetica, sans-serif',
+                fontFamily: 'monospace, Twemoji Rubisco, Arial, Helvetica, sans-serif',
                 scrollBeyondLastLine: false,
                 minimap: { enabled: true },
                 lineNumbers: "on",
@@ -252,16 +242,53 @@
                 editor.updateOptions({ wordWrap: lineWrapValue });
             });
 
+            function getLanguageFromExtension(extension) {
+                const extensionToLanguageMap = {
+                    'txt': 'plaintext',
+                    'bt': 'bt',
+                    'dt': 'dotlin',
+                    'c': 'c',
+                    'cpp': 'cpp',
+                    'cs': 'csharp',
+                    'css': 'css',
+                    'go': 'go',
+                    'html': 'html',
+                    'java': 'java',
+                    'js': 'javascript',
+                    'kt': 'kotlin',
+                    'php': 'php',
+                    'py': 'python',
+                    'rb': 'ruby',
+                    'rs': 'rust',
+                    'sql': 'sql',
+                    'ts': 'typescript',
+                    'vb': 'vb',
+                };
+                return extensionToLanguageMap[extension.toLowerCase()] || 'plaintext';
+            }
+
             function openFile() {
                 var input = document.createElement('input');
                 input.type = 'file';
-                input.accept = 'text/plain, text/html, text/css, text/javascript, .py, .ts, .java, .kt, .php, .go, .c, .csharp, .cpp, .rs, .rb, .sql, .pscpt';
+                input.accept = 'text/plain, text/html, text/css, text/javascript, .py, .ts, .java, .kt, .php, .go, .c, .csharp, .cpp, .rs, .rb, .sql, .pscpt, .dt, .bt, .sw';
                 input.onchange = function (event) {
                     var file = event.target.files[0];
                     var reader = new FileReader();
                     reader.onload = function () {
                         editor.setValue(reader.result);
+                        var fileExtension = file.name.split('.').pop();
+                        var detectedLanguage = getLanguageFromExtension(fileExtension);
+                        monaco.editor.setModelLanguage(editor.getModel(), detectedLanguage);
+                        languageSelector.value = detectedLanguage;
                         document.title = file.name;
+
+                        if (fileExtension.toLowerCase() === 'pscpt') {
+                            editor.updateOptions({ readOnly: true });
+                        } else if (fileExtension.toLowerCase() === 'sw') {
+                            editor.updateOptions({ readOnly: true });
+                        } else {
+                            editor.updateOptions({ readOnly: false });
+                        }
                     };
                     reader.readAsText(file);
                 };
@@ -277,6 +304,7 @@
                 extension = selectedLanguage === 'typescript' ? 'ts' : extension;
                 extension = selectedLanguage === 'java' ? 'java' : extension;
                 extension = selectedLanguage === 'kotlin' ? 'kt' : extension;
+                extension = selectedLanguage === 'dotlin' ? 'dt' : extension;
                 extension = selectedLanguage === 'rust' ? 'rs' : extension;
                 extension = selectedLanguage === 'ruby' ? 'rb' : extension;
                 var blob = new Blob([content], { type: 'text/plain' });
@@ -298,7 +326,6 @@
             document.getElementById('saveButton').addEventListener('click', saveFile);
 
             var isModified = false;
-
             editor.onDidChangeModelContent(function () {
                 isModified = true;
                 var fileName = document.title;
@@ -307,7 +334,7 @@
                 }
                 document.title = fileName;
             });
-
+            
             window.addEventListener('beforeunload', function (e) {
                 if (isModified) {
                     var confirmationMessage = 'You may have some unsaved changes. Are you sure you want to leave?';
@@ -315,7 +342,7 @@
                     return confirmationMessage;
                 }
             });
-
+            
             window.addEventListener('keydown', function (event) {
                 if (event.ctrlKey && event.key === 's') {
                     event.preventDefault();
@@ -328,5 +355,4 @@
         });
     </script>
 </body>
-
 </html>
