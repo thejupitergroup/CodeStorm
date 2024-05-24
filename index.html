@@ -1,3 +1,4 @@
+<!-- This version supports .sw and .pscpt files! After May 2024, remove the commented section in the JavaScript section. -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -343,7 +344,8 @@
                 }
             });
             
-            window.addEventListener('keydown', function (event) {
+            // This will disable editing support for .pscpt and .sw files.
+            /* window.addEventListener('keydown', function (event) {
                 if (event.ctrlKey && event.key === 's') {
                     event.preventDefault();
                     saveFile();
@@ -351,7 +353,7 @@
                     event.preventDefault();
                     openFile();
                 }
-            });
+            }); */
         });
     </script>
 </body>
