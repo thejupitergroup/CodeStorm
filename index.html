@@ -283,13 +283,13 @@
                         languageSelector.value = detectedLanguage;
                         document.title = file.name;
 
-                        if (fileExtension.toLowerCase() === 'pscpt') {
+                        /* if (fileExtension.toLowerCase() === 'pscpt') {
                             editor.updateOptions({ readOnly: true });
                         } else if (fileExtension.toLowerCase() === 'sw') {
                             editor.updateOptions({ readOnly: true });
                         } else {
                             editor.updateOptions({ readOnly: false });
-                        }
+                        } */
                     };
                     reader.readAsText(file);
                 };
@@ -344,8 +344,7 @@
                 }
             });
             
-            // This will disable editing support for .pscpt and .sw files.
-            /* window.addEventListener('keydown', function (event) {
+            window.addEventListener('keydown', function (event) {
                 if (event.ctrlKey && event.key === 's') {
                     event.preventDefault();
                     saveFile();
@@ -353,7 +352,7 @@
                     event.preventDefault();
                     openFile();
                 }
-            }); */
+            });
         });
     </script>
 </body>
